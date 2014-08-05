@@ -21,6 +21,7 @@ class RedactorUploadCrossDomain < Sinatra::Base
   IMAGE_PATH = File.join(ASSET_PATH, 'images')
 
   get '/redactor-images' do
+    content_type :json
     FileUtils.mkdir_p(IMAGE_PATH)
     images = Dir[File.join(IMAGE_PATH, '*')].map do |file|
       {
@@ -33,16 +34,21 @@ class RedactorUploadCrossDomain < Sinatra::Base
   end
 
   get '/redactor-files/:filename' do
+    content_type :json
     fullpath = File.join(FILE_PATH, params[:filename])
     send_file(fullpath) if File.file?(fullpath)
+    halt 404
   end
 
   get '/redactor-images/:filename' do
+    content_type :json
     fullpath = File.join(IMAGE_PATH, params[:filename])
     send_file(fullpath) if File.file?(fullpath)
+    halt 404
   end
 
   post '/redactor-files' do
+    content_type :json
     FileUtils.mkdir_p(FILE_PATH)
     datafile = params[:file]
     fullpath = File.join(FILE_PATH, datafile[:filename])
@@ -54,6 +60,7 @@ class RedactorUploadCrossDomain < Sinatra::Base
   end
 
   post '/redactor-images' do
+    content_type :json
     FileUtils.mkdir_p(IMAGE_PATH)
     datafile = params[:file]
     fullpath = File.join(IMAGE_PATH, datafile[:filename])

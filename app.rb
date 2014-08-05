@@ -36,15 +36,21 @@ class RedactorUploadCrossDomain < Sinatra::Base
   get '/redactor-files/:filename' do
     content_type :json
     fullpath = File.join(FILE_PATH, params[:filename])
-    send_file(fullpath) if File.file?(fullpath)
-    halt 404
+    if File.file?(fullpath)
+      send_file(fullpath)
+    else
+      halt 404
+    end
   end
 
   get '/redactor-images/:filename' do
     content_type :json
     fullpath = File.join(IMAGE_PATH, params[:filename])
-    send_file(fullpath) if File.file?(fullpath)
-    halt 404
+    if File.file?(fullpath)
+      send_file(fullpath)
+    else
+      halt 404
+    end
   end
 
   post '/redactor-files' do

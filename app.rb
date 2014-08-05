@@ -34,7 +34,6 @@ class RedactorUploadCrossDomain < Sinatra::Base
   end
 
   get '/redactor-files/:filename' do
-    content_type :json
     fullpath = File.join(FILE_PATH, params[:filename])
     if File.file?(fullpath)
       send_file(fullpath)
@@ -44,7 +43,6 @@ class RedactorUploadCrossDomain < Sinatra::Base
   end
 
   get '/redactor-images/:filename' do
-    content_type :json
     fullpath = File.join(IMAGE_PATH, params[:filename])
     if File.file?(fullpath)
       send_file(fullpath)
